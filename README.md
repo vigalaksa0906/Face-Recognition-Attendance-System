@@ -4,7 +4,7 @@ This project is an attendance system based on face recognition using Python. The
 ## Features
 
 - Face recognition for automatic attendance.
-- Attendance records stored in an Excel file 
+- Attendance records stored in an Excel file (`kehadiran.xlsx`)
 - Real-time face detection using a webcam.
 - The system only records students who are present on the current day.
 
