@@ -5,14 +5,14 @@ import pickle
 import pandas as pd
 from datetime import datetime
 
-# Load encoding wajah yang sudah disimpan
+# Load previously saved face encodings
 with open("encodings.pickle", "rb") as file:
     data = pickle.load(file)
 
-# Buka webcam
+# Open the webcam
 video_capture = cv2.VideoCapture(0)
 
-# Fungsi untuk mengecek apakah nama sudah ada di daftar hari ini
+# Function to check if the name has already been recorded today
 def is_already_recorded(name):
     try:
         df = pd.read_excel("kehadiran.xlsx")
@@ -26,27 +26,27 @@ while True:
     if not ret:
         break
 
-    # Konversi warna untuk face-recognition
+    # Convert frame color for face recognition
     rgb_frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-    # Deteksi wajah
+    # Detect faces
     face_locations = face_recognition.face_locations(rgb_frame)
     face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
 
     for face_encoding, face_location in zip(face_encodings, face_locations):
-        # Bandingkan dengan wajah yang dikenal
+        # Compare with known faces
         matches = face_recognition.compare_faces(data["encodings"], face_encoding)
-        name = "Tidak Dikenal"
+        name = "Unknown"
 
         if True in matches:
             match_index = matches.index(True)
             name = data["names"][match_index]
 
-            # Cek apakah nama sudah dicatat hari ini
+            # Check if the name has already been recorded today
             if not is_already_recorded(name):
-                # Simpan kehadiran ke file Excel
+                # Save attendance to Excel file
                 df = pd.DataFrame([[name, datetime.now().strftime("%Y-%m-%d %H:%M:%S")]],
-                                  columns=["Nama", "Waktu Kehadiran"])
+                                  columns=["Name", "Attendance Time"])
                 
                 try:
                     old_df = pd.read_excel("kehadiran.xlsx")
@@ -55,20 +55,20 @@ while True:
                     pass
                 
                 df.to_excel("kehadiran.xlsx", index=False)
-                print(f"{name} dicatat pada {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+                print(f"{name} recorded at {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
 
-        # Gambar kotak dan nama di wajah
+        # Draw a box and name on the face
         top, right, bottom, left = face_location
         cv2.rectangle(frame, (left, top), (right, bottom), (0, 255, 0), 2)
         cv2.putText(frame, name, (left, top - 10), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
-    # Tampilkan hasil
-    cv2.imshow("Face Recognition Absensi", frame)
+    # Show the result
+    cv2.imshow("Face Recognition Attendance", frame)
 
-    # Tekan 'q' untuk keluar
+    # Press 'q' to exit
     if cv2.waitKey(1) & 0xFF == ord("q"):
         break
 
-# Bersihkan
+# Cleanup
 video_capture.release()
 cv2.destroyAllWindows()
