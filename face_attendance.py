@@ -17,7 +17,7 @@ def is_already_recorded(name):
     try:
         df = pd.read_excel("kehadiran.xlsx")
         today = datetime.now().strftime("%Y-%m-%d")
-        return any((df["Nama"] == name) & (df["Waktu Kehadiran"].str.startswith(today)))
+        return any((df["Name"] == name) & (df["Attendance Time"].str.startswith(today)))
     except FileNotFoundError:
         return False
 
