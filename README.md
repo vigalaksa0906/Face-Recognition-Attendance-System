@@ -9,19 +9,27 @@ This project is an attendance system based on face recognition using Python. The
 - The system only records students who are present on the current day.
 
 ## Prerequisites
+Ensure you have Python 3.10–3.11 installed.
 
-Ensure that you have Python 3.x installed and the following Python libraries:
-
-- OpenCV
-- NumPy
-- face-recognition
-- pandas
-- openpyxl
-
-Install these libraries using the following command in your terminal or command prompt:
-
+The following Python libraries are required (with tested compatible versions):
 ```bash
-pip install opencv-python numpy face-recognition pandas openpyxl
+numpy==1.23.5
+opencv-python==4.11.0.86
+face-recognition==1.3.0
+face_recognition_models==0.3.0
+dlib==19.24.1
+pandas==2.2.3
+openpyxl==3.1.5
+Pillow==11.2.1
+```
+To install them, run:
+```bash
+pip install -r requirements.txt
+```
+Or manually:
+```bash
+pip install numpy==1.23.5 opencv-python==4.11.0.86 face-recognition==1.3.0 \
+dlib==19.24.1 pandas==2.2.3 openpyxl==3.1.5 Pillow==11.2.1
 ```
 
 ## Folder Structures
