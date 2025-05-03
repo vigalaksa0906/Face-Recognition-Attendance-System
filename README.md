@@ -24,12 +24,7 @@ Pillow==11.2.1
 ```
 To install them, run:
 ```bash
-pip install -r requirements.txt
-```
-Or manually:
-```bash
-pip install numpy==1.23.5 opencv-python==4.11.0.86 face-recognition==1.3.0 \
-dlib==19.24.1 pandas==2.2.3 openpyxl==3.1.5 Pillow==11.2.1
+pip install numpy==1.23.5 opencv-python==4.11.0.86 face-recognition==1.3.0 dlib==19.24.1 pandas==2.2.3 openpyxl==3.1.5 Pillow==11.2.1
 ```
 
 ## Folder Structures
